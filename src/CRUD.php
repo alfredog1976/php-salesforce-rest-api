@@ -129,7 +129,7 @@ class CRUD
         return json_decode($request->getBody(), true);
     }
 
-    public function sobjects()
+    public function getSobjects()
     {
         $url = "$this->instance_url/services/data/v39.0/sobjects";
 
