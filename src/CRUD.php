@@ -105,4 +105,56 @@ class CRUD
 
         return true;
     }
+    
+    public function search($search_string)
+    {
+    	// Replace characters with backslash + char so SF can search correctly
+    	$search  = array('?', '&', '|', '!', '{', '}', '[', ']', '(', ')', '^', '~', '*', ':', '+', '-', '"', "'");
+		$replace = array('\?', '\&', '\|', '\!', '\{', '\}', '\[', '\]', '\(', '\)', '\^', '\~', '\*', '\:', '\+', '\-', '\"', "\'");
+
+		// Check backslash special char first so they don't get replaced twice
+		$search_string = str_replace($search, $replace, str_replace('\\', '\\\\', $search_string));
+    	
+        $url = "$this->instance_url/services/data/v39.0/search";
+
+        $client = new Client();
+        $request = $client->request('GET', $url, [
+            'headers' => [
+                'Authorization' => "OAuth $this->access_token"
+            ],
+            'query' => [
+                'q' => 'FIND {' . $search_string . '}'
+            ]
+        ]);
+        return json_decode($request->getBody(), true);
+    }
+
+    public function sobjects()
+    {
+        $url = "$this->instance_url/services/data/v39.0/sobjects";
+
+        $client = new Client();
+        $request = $client->request('GET', $url, [
+            'headers' => [
+                'Authorization' => "OAuth $this->access_token"
+            ]
+        ]);
+        return json_decode($request->getBody(), true);
+    }
+
+    public function getSobjectFields($sobject, $id, $fields)
+    {
+        $url = "$this->instance_url/services/data/v39.0/sobjects/$sobject/$id";
+
+        $client = new Client();
+        $request = $client->request('GET', $url, [
+            'headers' => [
+                'Authorization' => "OAuth $this->access_token"
+            ],
+            'query' => [
+                'fields' => $fields
+            ]
+        ]);
+        return json_decode($request->getBody(), true);
+    }    
 }
