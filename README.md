@@ -95,3 +95,24 @@ Delete
     $crud->delete('Account', $id);
 
 ```
+
+Search
+
+```bash
+    //Uses FIND command with parameter search string. 
+    //Note: search string will have any reserved Salesforce characters replaced with character, preceded by backslash, 
+    //otherwise search query will result in error. Reserved characters: ? & | ! { } [ ] ( ) ^ ~ * : \ " ' + -
+    $crud->search('My Search String');
+
+```
+
+Get Salesforce Object Field's Values
+
+```bash
+    $crud->getSobjectFields('Opportunity', '<My Opportunity Id>', 'OwnerId');
+    
+    or
+    
+    $crud->getSobjectFields('User', '<My User Id>', 'Name,Email,Phone');
+
+```
