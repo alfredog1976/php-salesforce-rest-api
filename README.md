@@ -102,17 +102,24 @@ Search
     //Uses FIND command with parameter search string. 
     //Note: search string will have any reserved Salesforce characters replaced with character, preceded by backslash, 
     //otherwise search query will result in error. Reserved characters: ? & | ! { } [ ] ( ) ^ ~ * : \ " ' + -
-    $crud->search('My Search String');
+    $crud->search($search_string);
 
 ```
 
 Get Salesforce Object Field's Values
 
 ```bash
-    $crud->getSobjectFields('Opportunity', '<My Opportunity Id>', 'OwnerId');
+    $crud->getSobjectFields('Opportunity', $id, 'OwnerId');
     
     or
     
-    $crud->getSobjectFields('User', '<My User Id>', 'Name,Email,Phone');
+    $crud->getSobjectFields('User', $id, 'Name,Email,Phone');
+
+```
+
+Get Salesforce Objects
+
+```bash
+    $crud->getSobjects();
 
 ```
